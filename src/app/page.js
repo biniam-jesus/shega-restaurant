@@ -31,10 +31,12 @@ import {
   BarChart3,
   ShieldCheck,
   UserPlus,
-  Menu
+  Menu,
+  Smartphone // <-- It's now perfectly placed right here!
 } from 'lucide-react';
 
 export default function Home() {
+// ... rest of your code continues down here safely {
   // --- AUTHENTICATION, ROLE & IDENTITY STATE ---
   const [userRole, setUserRole] = useState(null); // 'manager', 'waiter', 'chef'
   const [currentBranch, setCurrentBranch] = useState('Shegawan'); 
