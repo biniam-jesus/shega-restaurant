@@ -8,35 +8,25 @@ import {
   CheckCircle,
   Lock,
   LogOut,
-  UserCheck,
-  User,
-  FileText,
-  Tag,
-  Split,
   Utensils,
   CreditCard,
   MapPin,
-  ClipboardList,
   Plus,
   Minus,
   Wallet,
-  FolderPlus,
   Layers,
-  MessageSquare,
   Pizza,
-  Clock,
   Check,
   X,
   AlertCircle,
-  BarChart3,
   ShieldCheck,
   UserPlus,
   Menu,
-  Smartphone // <-- It's now perfectly placed right here!
+  Smartphone,
+  Coffee
 } from 'lucide-react';
 
 export default function Home() {
-// ... rest of your code continues down here safely {
   // --- AUTHENTICATION, ROLE & IDENTITY STATE ---
   const [userRole, setUserRole] = useState(null); // 'manager', 'waiter', 'chef'
   const [currentBranch, setCurrentBranch] = useState('Shegawan'); 
@@ -63,32 +53,136 @@ export default function Home() {
   // --- APPLICATION NAVIGATION STATE ---
   const [activeTab, setActiveTab] = useState('dashboard');
   
-  // --- MENU CREATOR STATE ---
+  // --- PRODUCTION MENU STATE (UPDATED MATRIX DATASET) ---
   const [menuItems, setMenuItems] = useState([
-    { id: 'm1', name: 'Special Kitfo', price: 450, megaCategory: 'Food', subCategory: 'Traditional Raw' },
-    { id: 'm2', name: 'Doro Wat', price: 400, megaCategory: 'Food', subCategory: 'Traditional Stew' },
-    { id: 'm3', name: 'Habesha Beer', price: 110, megaCategory: 'Drinks', subCategory: 'Alcoholic' },
-    { id: 'm4', name: 'Soft Drink', price: 60, megaCategory: 'Drinks', subCategory: 'Sodas' },
+    // Hot Drinks
+    { id: 'hd1', name: 'የጀበና ቡና (Jebeana Coffee)', price: 50, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd2', name: 'ቡና (Coffee)', price: 60, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd3', name: 'ወተት (Milk)', price: 75, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd4', name: 'ማኪያቶ (Macchiato)', price: 95, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd5', name: 'ካፌ ላቴ (Café Latte)', price: 115, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd6', name: 'ለውዝ በቡና (Nut with Coffee)', price: 85, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd7', name: 'ካፑቺኖ (Cappuccino)', price: 125, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd8', name: 'ወተት በቡና (Milk with Coffee)', price: 95, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd9', name: 'ሆት ቸኮሌት (Hot Chocolate)', price: 140, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd10', name: 'ካራሜል ማኪያቶ (Caramel Macchiato)', price: 140, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    { id: 'hd11', name: 'ቸኮሌት ማኪያቶ (Chocolate Macchiato)', price: 140, category: 'Hot Drinks (ትኩስ መጠጦች)' },
+    // Tea
+    { id: 't1', name: 'ሻይ (Tea)', price: 50, category: 'Tea (ሻይ)' },
+    { id: 't2', name: 'ሎሚ ሻይ (Lemon Tea)', price: 65, category: 'Tea (ሻይ)' },
+    { id: 't3', name: 'ሻይ ቡና ስፕሪስ (Tea & Coffee Spiced/Spris)', price: 75, category: 'Tea (ሻይ)' },
+    { id: 't4', name: 'ቅንጅ (Kinj / Herbal blend)', price: 65, category: 'Tea (ሻይ)' },
+    { id: 't5', name: 'ለውዝ (Nut Tea)', price: 75, category: 'Tea (ሻይ)' },
+    { id: 't6', name: 'ብርቱካን ሻይ (Orange Tea)', price: 75, category: 'Tea (ሻይ)' },
+    { id: 't7', name: 'ፍሌቨርድ ሻይ (Flavored Tea)', price: 75, category: 'Tea (ሻይ)' },
+    { id: 't8', name: 'ስፔሻል ሻይ (Special Tea)', price: 110, category: 'Tea (ሻይ)' },
+    { id: 't9', name: 'ማንጎ ሻይ (Mango Tea)', price: 75, category: 'Tea (ሻይ)' },
+    { id: 't10', name: 'አናናስ ሻይ (Pineapple Tea)', price: 75, category: 'Tea (ሻይ)' },
+    { id: 't11', name: 'ስፔሻል ቅንጅ (Special Kinj)', price: 85, category: 'Tea (ሻይ)' },
+    { id: 't12', name: 'ማህበረሰባዊ ሻይ (Community/Social Tea)', price: 85, category: 'Tea (ሻይ)' },
+    // Burgers with Variant Structures
+    { id: 'b1', name: 'ሸጋ በርገር (Shega Burger)', prices: { single: 540, double: 695, triple: 895 }, category: 'Burgers (በርገር)', description: 'bread, beef sausage, beef, cheese, egg, vegetables and mayo' },
+    { id: 'b2', name: 'ቺክን በርገር (Chicken Burger)', prices: { single: 565, double: 730, triple: 885 }, category: 'Burgers (በርገር)', description: 'bread, chicken, cheese, sausage, vegetables, mayo' },
+    { id: 'b3', name: 'ቺዝ በርገር (Cheese Burger)', prices: { single: 495, double: 650, triple: 820 }, category: 'Burgers (በርገር)', description: 'bread, extra cheese, beef, vegetables, mayo' },
+    { id: 'b4', name: 'ቢፍ በርገር (Beef Burger)', prices: { single: 445, double: 595, triple: 710 }, category: 'Burgers (በርገር)', description: 'bread, beef, vegetables, mayo' },
+    { id: 'b5', name: 'ጁሲ በርገር (Juicy Burger)', prices: { single: 585, double: 740, triple: 935 }, category: 'Burgers (በርገር)', description: 'similar with shega style but extra juicy' },
+    { id: 'b6', name: 'ቺፕስ (Chips)', price: 280, category: 'Burgers (በርገር)', description: 'fried potatoes served with ketchup' },
+    // Sandwiches
+    { id: 's1', name: 'ክለብ ሳንድዊች (Club Sandwich)', price: 480, category: 'Sandwiches (ሳንድዊች)', description: 'toasted bread with beef, egg, mayo, vegetables, fries' },
+    { id: 's2', name: 'ቺክን ሳንድዊች (Chicken Sandwich)', price: 595, category: 'Sandwiches (ሳንድዊች)', description: 'Grilled chicken breast sandwiched added vegetables and sauces and fries' },
+    { id: 's3', name: 'ስቴክ ሳንድዊች (Steak Sandwich)', price: 550, category: 'Sandwiches (ሳንድዊች)', description: 'Grilled beef sandwiched added vegetables and sauces and fries' },
+    { id: 's4', name: 'ቱና ሳንድዊች (Tuna Sandwich)', price: 590, category: 'Sandwiches (ሳንድዊች)', description: 'Bread, tuna, sauces, vegetables served with fries' },
+    { id: 's5', name: 'እንቁላል ሳንድዊች (Egg Sandwich)', price: 340, category: 'Sandwiches (ሳንድዊች)', description: 'omelet eggs sandwiched with an bread and sauces' },
+    { id: 's6', name: 'የአትክልት ሳንድዊች (Vegetable Sandwich)', price: 385, category: 'Sandwiches (ሳንድዊች)', description: 'fresh and seasonal vegetables with bread served with fries' },
+    // Wraps
+    { id: 'w1', name: 'ሸጋ ራፕ (Shega Wrap)', price: 660, category: 'Wraps & Burritos (ራፕ)', description: 'chicken, beef, egg, cheese, vegetables, sauces wrapped with a pita and fries' },
+    { id: 'w2', name: 'ቺክን ራፕ (Chicken Wrap)', price: 580, category: 'Wraps & Burritos (ራፕ)', description: 'chicken, vegetables and sauces wrapped with fresh pita and fries' },
+    { id: 'w3', name: 'ቢፍ ራፕ (Beef Wrap)', price: 530, category: 'Wraps & Burritos (ራፕ)', description: 'beef, vegetables and sauces wrapped with pita and fries' },
+    { id: 'w4', name: 'የአትክልት ራፕ (Vegetable Wrap)', price: 395, category: 'Wraps & Burritos (ራፕ)', description: 'fresh vegetables wrapped with pita and fries' },
+    { id: 'w5', name: 'ሸጋ ቡሪቶ (Shega Burrito)', price: 780, category: 'Wraps & Burritos (ራፕ)', description: 'chicken, beef, vegetables, rice, egg cheese, wrapped and baked served with fries' },
+    { id: 'w6', name: 'ቺክን ቡሪቶ (Chicken Burrito)', price: 690, category: 'Wraps & Burritos (ራፕ)', description: 'chicken, vegetables, rice cheese, egg, wrapped and baked served with fries' },
+    { id: 'w7', name: 'ቢፍ ቡሪቶ (Beef Burrito)', price: 660, category: 'Wraps & Burritos (ራፕ)', description: 'beef, vegetables, rice cheese, egg wrapped and baked served with fries' },
+    // Breakfast
+    { id: 'bk1', name: 'Pancake', price: 345, category: 'Breakfast', description: 'Pancake made with milk and egg served with honey and syrup' },
+    { id: 'bk2', name: 'French Toast', price: 280, category: 'Breakfast', description: 'Bread toasted with egg served with honey and syrup' },
+    { id: 'bk3', name: 'Avocado Toast', price: 280, category: 'Breakfast', description: 'Smashed and seasoned avocado on toasted bread' },
+    { id: 'bk4', name: 'Avocado Egg Toast', price: 330, category: 'Breakfast', description: 'Avocado toast topped with boiled egg' },
+    { id: 'bk5', name: 'Yogurt Avocado Toast', price: 395, category: 'Breakfast', description: 'Yogurt smashed avocado on toasted bread with boiled egg' },
+    { id: 'bk6', name: 'Shega Toast', price: 395, category: 'Breakfast', description: 'Yoghurt, smashed and seasoned avocado on a toasted bread topped with boiled egg' },
+    // Oats
+    { id: 'o1', name: 'Chocolate Oats', price: 350, category: 'Oats', description: 'Oats cooked with milk and chocolate chips' },
+    { id: 'o2', name: 'Double Chocolate Oatmeal', price: 350, category: 'Oats', description: 'oats cooked with milk and chocolate served with chocolate chips' },
+    { id: 'o3', name: 'PB Banana Oats', price: 310, category: 'Oats', description: 'Oats with peanut butter and banana' },
+    { id: 'o4', name: 'PB Banana Oatmeal', price: 310, category: 'Oats', description: 'oats cooked with milk served with peanut butter and banana' },
+    { id: 'o5', name: 'Strawberry Oats', price: 345, category: 'Oats', description: 'Oats with strawberry syrup and strawberries' },
+    { id: 'o6', name: 'Strawberry Oatmeal', price: 345, category: 'Oats', description: 'oats cooked with milk and strawberry syrup served with strawberries' },
+    { id: 'o7', name: 'Apple Cinnamon Oats', price: 355, category: 'Oats', description: 'Cinnamon apples with oats and milk' },
+    { id: 'o8', name: 'Apple Cinnamon Oatmeal', price: 355, category: 'Oats', description: 'cinnamon seasoned apples on an oats cooked with milk and cinnamon' },
+    { id: 'o9', name: 'Honey Oats', price: 245, category: 'Oats', description: 'Oats cooked with milk and honey' },
+    { id: 'o10', name: 'Plain Oats', price: 245, category: 'Oats', description: 'oats cooked with milk and honey' },
+    // Hotdog
+    { id: 'h1', name: 'Regular Hotdog', price: 420, category: 'Hotdog', description: 'Hotdog sausage with mayo and fries' },
+    { id: 'h2', name: 'Plain Hotdog', price: 420, category: 'Hotdog', description: 'hotdog sausage sandwiched and with mayo and fries' },
+    { id: 'h3', name: 'Cheese Hotdog', price: 540, category: 'Hotdog', description: 'Hotdog sausage with cheese, mayo and fries' },
+    { id: 'h4', name: 'Cheesy Hotdog', price: 540, category: 'Hotdog', description: 'hotdog sausage sandwiched and with cheese, mayo and fries' },
+    { id: 'h5', name: 'Spicy Hotdog', price: 520, category: 'Hotdog', description: 'Hotdog sausage with hot sauce, mayo and fries' },
+    { id: 'h6', name: 'Chilli Hotdog', price: 520, category: 'Hotdog', description: 'hotdog sausage sandwiched and with hot sauces mayo and fries' },
+    // Kids Menu
+    { id: 'k1', name: 'Kids Pancake', price: 225, category: 'Kids Menu' },
+    { id: 'k2', name: 'Kids French Toast', price: 195, category: 'Kids Menu' },
+    { id: 'k3', name: 'Fried Egg', price: 195, category: 'Kids Menu' },
+    { id: 'k4', name: 'Fries with Egg', price: 215, category: 'Kids Menu' },
+    { id: 'k5', name: 'Special Kids Combo', price: 285, category: 'Kids Menu' },
+    // Meals & Burgers
+    { id: 'mb1', name: 'Chicken Burger (Classic)', price: 355, category: 'Meals & Burgers' },
+    { id: 'mb2', name: 'Cheese Burger (Classic)', price: 385, category: 'Meals & Burgers' },
+    { id: 'mb3', name: 'Chicken Pizza', price: 395, category: 'Meals & Burgers' }, // Fallback to flat normal price
+    { id: 'mb4', name: 'Special Fried Rice', price: 390, category: 'Meals & Burgers' },
+    { id: 'mb5', name: 'Chicken Sandwich (Classic)', price: 320, category: 'Meals & Burgers' },
+    // Ethiopian Breakfast
+    { id: 'eb1', name: 'Chechebsa', price: 225, category: 'Ethiopian Breakfast' },
+    { id: 'eb2', name: 'Special Chechebsa', price: 295, category: 'Ethiopian Breakfast' },
+    { id: 'eb3', name: 'Fetira', price: 245, category: 'Ethiopian Breakfast' },
+    { id: 'eb4', name: 'Special Fetira', price: 395, category: 'Ethiopian Breakfast' },
+    // Eggs
+    { id: 'eg1', name: 'Omelette', price: 265, category: 'Eggs' },
+    { id: 'eg2', name: 'Cheese Omelette', price: 370, category: 'Eggs' },
+    { id: 'eg3', name: 'Scrambled Egg', price: 280, category: 'Eggs' },
+    { id: 'eg4', name: 'Egg with meat', price: 350, category: 'Eggs' },
+    // Drinks
+    { id: 'd1', name: 'Strawberry Smoothie', price: 200, category: 'Drinks' },
+    { id: 'd2', name: 'Chocolate Smoothie', price: 180, category: 'Drinks' },
+    { id: 'd3', name: 'Oreo Smoothie', price: 190, category: 'Drinks' },
+    // Desserts
+    { id: 'ds1', name: 'White Forest Cake', price: 180, category: 'Desserts' },
+    { id: 'ds2', name: 'Black Forest Cake', price: 210, category: 'Desserts' },
+    { id: 'ds3', name: 'Chocolate Cake', price: 250, category: 'Desserts' },
+    { id: 'ds4', name: 'Caramel Cake', price: 230, category: 'Desserts' },
+    { id: 'ds5', name: 'Red Velvet Cake', price: 220, category: 'Desserts' },
+    { id: 'ds6', name: 'Angel Cake', price: 110, category: 'Desserts' },
+    { id: 'ds7', name: 'Cheese Cake', price: 350, category: 'Desserts' },
+    { id: 'ds8', name: 'Cupcake', price: 110, category: 'Desserts' },
+    { id: 'ds9', name: 'Eclair', price: 110, category: 'Desserts' },
+    { id: 'ds10', name: 'Donut', price: 140, category: 'Desserts' },
+    { id: 'ds11', name: 'Mille Feuille', price: 130, category: 'Desserts' },
+    { id: 'ds12', name: 'Croissant', price: 120, category: 'Desserts' },
+    { id: 'ds13', name: 'Oreo Dessert Cup', price: 120, category: 'Desserts' },
+    { id: 'ds14', name: 'Strawberry Dessert Cup', price: 100, category: 'Desserts' },
+    { id: 'ds15', name: 'Chocolate Dessert Cup', price: 120, category: 'Desserts' }
   ]);
 
+  const uniqueCategories = ['All', ...Array.from(new Set(menuItems.map(i => i.category)))];
   const [activeMenuFilter, setActiveMenuFilter] = useState('All');
-  const [newMegaCategory, setNewMegaCategory] = useState('Food');
-  const [newSubCategory, setNewSubCategory] = useState('');
-  const [newDishName, setNewDishName] = useState('');
-  const [newDishPrice, setNewDishPrice] = useState('');
 
   // --- CORE TRANSACTION DATA STATES ---
   const [cart, setCart] = useState([]);
   const [orders, setOrders] = useState([
-    { id: '101', table: '1', waiter: 'Abebe Chala', branch: 'Shegawan', customerTier: 'Regular', paymentType: 'Cash', cashAmount: 1035, telebirrAmount: 0, discountApplied: 0, taxTotal: 135, total: 1035, status: 'completed', hourLogged: 10, items: [{ cartItemId: '101_1', name: 'Special Kitfo', qty: 1, price: 450, megaCategory: 'Food', itemNote: '' }, { cartItemId: '101_2', name: 'Special Kitfo', qty: 1, price: 450, megaCategory: 'Food', itemNote: '' }] },
-    { id: '102', table: '3', waiter: 'Chaltu Kekeba', branch: 'Shegawan', customerTier: 'VIP Tier', paymentType: 'Telebirr', cashAmount: 0, telebirrAmount: 713, discountApplied: 0, taxTotal: 93, total: 713, status: 'completed', hourLogged: 14, items: [{ cartItemId: '102_1', name: 'Doro Wat', qty: 1, price: 400, megaCategory: 'Food', itemNote: 'Extra egg' }, { cartItemId: '102_2', name: 'Habesha Beer', qty: 2, price: 110, megaCategory: 'Drinks', itemNote: 'Ice cold' }] }
+    { id: '201', table: '4', waiter: 'Abebe Chala', branch: 'Shegawan', customerTier: 'Regular', paymentType: 'Cash', cashAmount: 650, telebirrAmount: 0, discountApplied: 0, taxTotal: 85, total: 650, status: 'completed', hourLogged: 9, items: [{ cartItemId: 'c201_1', name: 'የጀበና ቡና (Jebeana Coffee)', qty: 2, price: 50, itemNote: '' }] }
   ]);
 
   // --- EXPENSE LEDGER STATES ---
   const [expenses, setExpenses] = useState([
-    { id: 'e1', branch: 'Shegawan', requester: 'Manager Desk', description: 'Fresh Meat Market (Kitfo Cut)', category: 'Ingredients', amount: 4500, timestamp: '10:15 AM', status: 'Approved' },
-    { id: 'e2', branch: 'Shegawan', requester: 'Manager Desk', description: 'Generator Diesel backup', category: 'Utilities', amount: 1200, timestamp: '01:30 PM', status: 'Approved' },
-    { id: 'e3', branch: 'Shegawan', requester: 'Abebe Chala', description: 'Emergency Lime/Limon market buy', category: 'Ingredients', amount: 350, timestamp: '02:15 PM', status: 'Pending Approval' }
+    { id: 'e1', branch: 'Shegawan', requester: 'Manager Desk', description: 'Fresh Meat Market Run', category: 'Ingredients', amount: 4500, timestamp: '10:15 AM', status: 'Approved' }
   ]);
   const [expenseDesc, setExpenseDesc] = useState('');
   const [expenseCategory, setExpenseCategory] = useState('Ingredients');
@@ -134,7 +228,7 @@ export default function Home() {
         setCurrentBranch(matchedAccount.branch);
         setPin('');
         setLoginWaiterName('');
-        setActiveTab('pos'); // Open directly into ordering screen for speed on mobile
+        setActiveTab('pos'); 
       } else {
         setAuthError('Security Match Failed.');
         setPin('');
@@ -146,43 +240,27 @@ export default function Home() {
     setUserRole(null);          
     setSelectedProfile(null);   
     setActiveWaiterIdentity('');
-    setPin('');                 
+    setPin('');                
     setAuthError('');           
+    setMobileMenuOpen(false);
   };
 
-  const handleAddNewStaff = (e) => {
-    e.preventDefault();
-    if (!regName.trim() || !regPin.trim()) return;
-    const newStaff = { id: 'st_' + Date.now(), name: regName.trim(), pin: regPin.trim(), branch: regBranch, role: 'waiter' };
-    setStaffRegistry([...staffRegistry, newStaff]);
-    setRegName(''); setRegPin('');
-    alert(`Success: Registered ${newStaff.name}`);
-  };
-
-  const handleCreateMenuItem = (e) => {
-    e.preventDefault();
-    if (!newSubCategory.trim() || !newDishName.trim() || !newDishPrice) return;
-    const newItem = { id: 'm_' + Date.now(), name: newDishName, price: parseFloat(newDishPrice), megaCategory: newMegaCategory, subCategory: newSubCategory.trim() };
-    setMenuItems([...menuItems, newItem]);
-    setNewDishName(''); setNewDishPrice(''); setNewSubCategory('');
-    alert(`Published: ${newItem.name}`);
-  };
-
-  const addItemToCart = (item) => {
+  const addItemToCart = (item, customPrice = null, labelExtension = '') => {
+    const finalPrice = customPrice !== null ? customPrice : item.price;
+    const finalName = labelExtension ? `${item.name} (${labelExtension})` : item.name;
+    
     const uniqueCartItemId = 'cart_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4);
-    setCart([...cart, { ...item, cartItemId: uniqueCartItemId, qty: 1, itemNote: '' }]);
+    setCart([...cart, { ...item, name: finalName, price: finalPrice, cartItemId: uniqueCartItemId, qty: 1, itemNote: '' }]);
   };
 
-  const removeCartItemRow = (cartItemId) => {
-    setCart(cart.filter(i => i.cartItemId !== cartItemId));
-  };
-
-  const handleUpdateItemNote = (cartItemId, noteText) => {
-    setCart(cart.map(i => i.cartItemId === cartItemId ? { ...i, itemNote: noteText } : i));
-  };
-
-  const getMenuTotalQtyInCart = (menuId) => {
-    return cart.filter(i => i.id === menuId).reduce((sum, i) => sum + i.qty, 0);
+  const updateCartQty = (cartItemId, incremental) => {
+    setCart(cart.map(item => {
+      if (item.cartItemId === cartItemId) {
+        const newQty = item.qty + incremental;
+        return newQty > 0 ? { ...item, qty: newQty } : item;
+      }
+      return item;
+    }).filter(item => item.qty > 0));
   };
 
   const submitOrder = () => {
@@ -210,25 +288,6 @@ export default function Home() {
     return { subtotal, discount, vat, total: (subtotal - discount) + vat };
   };
 
-  const handleAddExpense = (e) => {
-    e.preventDefault();
-    if (!expenseDesc || !expenseAmount) return;
-    const newExpense = {
-      id: 'e_' + Date.now(), branch: currentBranch,
-      requester: userRole === 'waiter' ? activeWaiterIdentity : 'Manager Desk',
-      description: expenseDesc, category: expenseCategory, amount: parseFloat(expenseAmount),
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      status: userRole === 'manager' ? 'Approved' : 'Pending Approval'
-    };
-    setExpenses([newExpense, ...expenses]);
-    setExpenseDesc(''); setExpenseAmount('');
-    alert('Expense logged successfully.');
-  };
-
-  const handleUpdateExpenseStatus = (expenseId, targetStatus) => {
-    setExpenses(expenses.map(e => e.id === expenseId ? { ...e, status: targetStatus } : e));
-  };
-
   const processPayment = () => {
     if (!selectedPaymentOrder) return;
     const calcs = getPaymentCalculations(selectedPaymentOrder);
@@ -252,7 +311,6 @@ export default function Home() {
     setIsHybrid(false);
   };
 
-  // --- ANALYTICS TRANSLATORS ---
   const activeBranchOrders = orders.filter(o => o.paymentType !== 'Pending' && o.branch === currentBranch);
   const totalGrossSales = activeBranchOrders.reduce((sum, o) => sum + o.total, 0);
   const totalCashSales = activeBranchOrders.reduce((sum, o) => sum + o.cashAmount, 0);
@@ -260,84 +318,106 @@ export default function Home() {
 
   const filteredMenuItems = activeMenuFilter === 'All' 
     ? menuItems 
-    : menuItems.filter(item => item.megaCategory === activeMenuFilter);
+    : menuItems.filter(item => item.category === activeMenuFilter);
 
   const activeBillCalculations = getPaymentCalculations(selectedPaymentOrder);
 
-  // --- LOGIN MATRIX VIEW ---
+  // --- ACCESS CONTROL LIST FILTER ---
+  // CORRECTION: Waiters are granted explicit clearance to settle tickets directly on their devices
+  const navItems = [
+    { id: 'dashboard', label: 'Metrics Dashboard', icon: LayoutDashboard, roles: ['manager'] },
+    { id: 'pos', label: 'Ticket Terminal', icon: ShoppingCart, roles: ['manager', 'waiter'] },
+    { id: 'kitchen', label: 'Kitchen Lines', icon: ChefHat, roles: ['manager', 'chef'] },
+    { id: 'billing', label: 'Cashier Deck', icon: CreditCard, roles: ['manager', 'waiter'] },
+    { id: 'expenses', label: 'Expense Tracker', icon: Wallet, roles: ['manager', 'waiter'] }
+  ].filter(item => item.roles.includes(userRole));
+
   if (!userRole) {
     return (
-      <div className="min-h-screen bg-[#F7F4EB] text-slate-800 flex flex-col justify-center items-center p-4 font-sans">
-        <div className="w-full max-w-sm sm:max-w-md bg-white p-6 sm:p-8 rounded-[2rem] border border-blue-100 shadow-xl space-y-6">
+      <div className="min-h-screen bg-[#FDFBF7] text-slate-800 flex flex-col justify-center items-center p-4">
+        <div className="w-full max-w-md bg-white p-6 sm:p-8 rounded-[2rem] border border-orange-100 shadow-xl space-y-6">
           <div className="text-center">
-            <p className="text-[10px] text-[#D97706] font-black tracking-[4px] uppercase mb-1">Shega OS Terminal</p>
-            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-blue-900">SECURITY GATEWAY</h2>
+            <p className="text-[10px] text-amber-600 font-black tracking-[4px] uppercase mb-1">Shega OS Platform</p>
+            <h2 className="text-2xl font-black tracking-tight text-blue-900">SYSTEM GATEWAY</h2>
           </div>
+
+          {authError && (
+            <div className="bg-red-50 text-red-700 text-xs p-3 rounded-xl flex items-center gap-2 border border-red-100 font-bold">
+              <AlertCircle size={16} />
+              <span>{authError}</span>
+            </div>
+          )}
 
           {!selectedProfile ? (
             <div className="space-y-3 pt-2">
-              {['manager', 'waiter', 'chef'].map((role) => (
+              {[
+                { id: 'manager', icon: ShieldCheck, label: 'Manager Node' },
+                { id: 'waiter', icon: Smartphone, label: 'Waiter Terminal' },
+                { id: 'chef', icon: ChefHat, label: 'Kitchen Display' }
+              ].map((p) => (
                 <button
-                  key={role}
-                  onClick={() => setSelectedProfile(role)}
-                  className="w-full bg-[#F7F4EB]/60 border border-blue-100 hover:border-blue-600 p-4 rounded-xl flex items-center justify-between font-black uppercase text-xs tracking-wider transition-all"
+                  key={p.id}
+                  onClick={() => setSelectedProfile(p.id)}
+                  className="w-full bg-[#FDFBF7] border border-slate-100 hover:border-amber-500 p-4 rounded-2xl flex items-center justify-between font-black uppercase text-xs tracking-wider transition-all shadow-sm"
                 >
-                  <span className="text-blue-900">{role} Node Terminal</span>
-                  <Lock size={14} className="text-blue-400" />
+                  <div className="flex items-center gap-3">
+                    <p.icon size={18} className="text-blue-900" />
+                    <span className="text-blue-900">{p.label}</span>
+                  </div>
+                  <Lock size={14} className="text-slate-400" />
                 </button>
               ))}
             </div>
           ) : (
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="flex justify-between items-center bg-blue-900 px-4 py-2 rounded-xl text-white">
-                <span className="text-xs font-black uppercase">Node: {selectedProfile}</span>
+                <span className="text-xs font-black uppercase">Role: {selectedProfile}</span>
                 <button type="button" onClick={() => { setSelectedProfile(null); setAuthError(''); }} className="text-[10px] text-blue-200 underline font-bold">Back</button>
               </div>
 
               {selectedProfile === 'waiter' && (
                 <>
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase font-black text-slate-500">Work Branch Station</label>
+                    <label className="text-[10px] uppercase font-black text-slate-400">Station Node</label>
                     <select
                       value={loginWaiterBranch}
                       onChange={(e) => setLoginWaiterBranch(e.target.value)}
-                      className="w-full bg-white border border-blue-100 rounded-xl p-3 text-xs font-bold text-blue-900"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-bold text-blue-900"
                     >
-                      <option value="Shegawan">Shegawan Node</option>
-                      <option value="Teymshega">Teymshega Node</option>
+                      <option value="Shegawan">Shegawan Terminal</option>
+                      <option value="Teymshega">Teymshega Terminal</option>
                     </select>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase font-black text-slate-500">Assigned Operator Name</label>
+                    <label className="text-[10px] uppercase font-black text-slate-400">Operator Identity Name</label>
                     <input
                       type="text"
                       required
                       value={loginWaiterName}
                       onChange={(e) => setLoginWaiterName(e.target.value)}
-                      placeholder="Enter full name"
-                      className="w-full bg-white border border-blue-100 rounded-xl p-3 text-xs font-bold text-slate-800"
+                      placeholder="Input Waiter Profile Name"
+                      className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs font-bold"
                     />
                   </div>
                 </>
               )}
 
               <div className="space-y-1">
-                <label className="text-[10px] uppercase font-black text-slate-500">Access Key (PIN)</label>
+                <label className="text-[10px] uppercase font-black text-slate-400">Security Access Pin</label>
                 <input
                   type="password"
                   maxLength={4}
+                  required
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
                   placeholder="••••"
-                  className="w-full bg-[#F7F4EB] text-center border border-blue-100 rounded-xl p-3 text-xl tracking-[0.5em] text-blue-900 focus:outline-none"
+                  className="w-full bg-slate-50 text-center border border-slate-200 rounded-xl p-3 text-xl tracking-[0.5em] font-black text-blue-900 focus:outline-none"
                 />
               </div>
 
-              {authError && <p className="text-red-500 text-center text-[11px] font-bold">{authError}</p>}
-
-              <button type="submit" className="w-full bg-blue-600 text-white font-black text-xs p-3.5 rounded-xl uppercase tracking-wider hover:bg-blue-700 transition-all">
-                Verify Profile Credentials
+              <button type="submit" className="w-full bg-amber-600 text-white p-3 rounded-xl text-xs font-black uppercase tracking-wider shadow-md hover:bg-amber-700 transition-all">
+                Authenticate Handshake
               </button>
             </form>
           )}
@@ -347,384 +427,466 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F4EB] text-slate-800 font-sans pb-24 md:pb-6">
+    <div className="min-h-screen bg-[#FDFBF7] text-slate-800 flex flex-col md:flex-row font-sans">
       
-      {/* --- RESPONSIVE MASTER HEAD --- */}
-      <header className="sticky top-0 z-50 p-4 border-b border-blue-100 bg-white/90 backdrop-blur-lg flex justify-between items-center shadow-sm">
-        <div>
-          <div className="flex items-center gap-1 text-[9px] text-blue-600 font-black tracking-widest uppercase">
-            <span>Shega OS</span>
-            <span className="text-blue-200">•</span>
-            <span className="text-slate-500 flex items-center gap-0.5"><MapPin size={9} /> {currentBranch}</span>
+      {/* MOBILE APPLICATION HEADER */}
+      <div className="md:hidden w-full bg-blue-900 text-white px-4 py-3 flex justify-between items-center shadow-md sticky top-0 z-50">
+        <div className="flex items-center gap-2">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-1 text-blue-100">
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+          <div>
+            <h1 className="text-sm font-black tracking-tight">Shega OS</h1>
+            <p className="text-[9px] text-amber-400 font-bold uppercase">{currentBranch} Branch</p>
           </div>
-          <h1 className="text-base md:text-lg font-black tracking-tight uppercase text-blue-900 truncate max-w-[180px] sm:max-w-none">
-            {userRole === 'waiter' ? activeWaiterIdentity : `${userRole} Control Matrix`}
-          </h1>
         </div>
-        
-        {/* DESKTOP EXCLUSIVE NAVIGATION HEADER BAR */}
-        <div className="hidden lg:flex bg-[#F7F4EB] border border-blue-100 p-1 rounded-xl items-center gap-1">
-          <button onClick={() => setActiveTab('dashboard')} className={`px-3 py-1.5 text-[11px] font-black uppercase rounded-lg transition-colors ${activeTab === 'dashboard' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}>Dashboard</button>
-          {userRole === 'manager' && (
-            <>
-              <button onClick={() => setActiveTab('staffProvisioning')} className={`px-3 py-1.5 text-[11px] font-black uppercase rounded-lg transition-colors ${activeTab === 'staffProvisioning' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}>Staff Matrix</button>
-              <button onClick={() => setActiveTab('menuManager')} className={`px-3 py-1.5 text-[11px] font-black uppercase rounded-lg transition-colors ${activeTab === 'menuManager' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}>Add Menu</button>
-            </>
-          )}
-          <button onClick={() => setActiveTab('pos')} className={`px-3 py-1.5 text-[11px] font-black uppercase rounded-lg transition-colors ${activeTab === 'pos' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}>Ordering</button>
-          <button onClick={() => setActiveTab('billing')} className={`px-3 py-1.5 text-[11px] font-black uppercase rounded-lg transition-colors ${activeTab === 'billing' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}>Payments ({orders.filter(o => o.paymentType === 'Pending' && o.branch === currentBranch).length})</button>
-          <button onClick={() => setActiveTab('expenses')} className={`px-3 py-1.5 text-[11px] font-black uppercase rounded-lg transition-colors ${activeTab === 'expenses' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}>Expenses</button>
-          {(userRole === 'manager' || userRole === 'chef') && (
-            <button onClick={() => setActiveTab('kitchen')} className={`px-3 py-1.5 text-[11px] font-black uppercase rounded-lg transition-colors ${activeTab === 'kitchen' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-600'}`}>KDS</button>
-          )}
+        <button onClick={handleLogout} className="p-1 text-red-300"><LogOut size={16} /></button>
+      </div>
+
+      {/* MOBILE NAV OVERLAY DRAWER */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 bg-blue-950/60 z-40 md:hidden" onClick={() => setMobileMenuOpen(false)}>
+          <div className="w-64 max-w-[80vw] h-full bg-blue-900 text-white p-4 flex flex-col space-y-6" onClick={e => e.stopPropagation()}>
+            <div className="border-b border-blue-800 pb-4">
+              <p className="text-[10px] text-amber-400 font-black uppercase">Operator Frame</p>
+              <h3 className="text-sm font-black truncate">{userRole === 'waiter' ? activeWaiterIdentity : 'Manager Core'}</h3>
+            </div>
+            <nav className="flex-1 space-y-1">
+              {navItems.map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
+                  className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition-all ${activeTab === item.id ? 'bg-amber-600 text-white shadow-md' : 'text-blue-100 hover:bg-blue-800'}`}
+                >
+                  <item.icon size={16} />
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
+          </div>
+        </div>
+      )}
+
+      {/* DESKTOP PERMANENT HUD BAR */}
+      <aside className="hidden md:flex w-64 bg-blue-900 text-white flex-col shrink-0 sticky top-0 h-screen shadow-lg">
+        <div className="p-6 border-b border-blue-950 flex flex-col space-y-1">
+          <span className="text-[10px] text-amber-400 font-black tracking-[3px] uppercase">Engine Hub</span>
+          <h1 className="text-xl font-black tracking-tight">Shega OS v3.2</h1>
+          <div className="bg-blue-950/40 p-2 rounded-xl mt-3 text-center border border-blue-800">
+            <p className="text-[9px] text-slate-400 font-bold uppercase">Node Station</p>
+            <p className="text-xs font-black text-white">{currentBranch}</p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button onClick={handleLogout} className="p-2 border border-blue-100 rounded-full bg-[#F7F4EB] text-blue-950 hover:text-red-500 transition-colors">
-            <LogOut size={14} />
+        <nav className="flex-1 p-4 space-y-1">
+          {navItems.map(item => (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id)}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${activeTab === item.id ? 'bg-amber-600 text-white shadow-md' : 'text-blue-100 hover:bg-blue-800/50'}`}
+            >
+              <item.icon size={16} />
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </nav>
+
+        <div className="p-4 border-t border-blue-950 bg-blue-950/40">
+          <p className="text-[9px] text-slate-400 font-bold uppercase">Operator Account</p>
+          <p className="text-xs font-black text-white truncate mb-3">{userRole === 'waiter' ? activeWaiterIdentity : 'System Administrator'}</p>
+          <button onClick={handleLogout} className="w-full bg-red-950/60 text-red-300 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-red-900 hover:text-white transition-all flex items-center justify-center gap-2">
+            <LogOut size={12} /> Close Terminal
           </button>
         </div>
-      </header>
+      </aside>
 
-      {/* --- MAIN CORE RENDER NODE CONTAINER --- */}
-      <main className="p-4 max-w-7xl mx-auto space-y-4">
+      {/* CORE FRAME LAYOUT CONTENT */}
+      <main className="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl w-full mx-auto space-y-6 overflow-y-auto">
         
-        {/* --- 1. DASHBOARD & INTERACTIVE LIVE ANALYTICS --- */}
-        {activeTab === 'dashboard' && (
-          <div className="space-y-4">
-            <div className="bg-white border border-blue-100 p-4 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 shadow-sm">
-              <div>
-                <span className="text-[9px] font-black text-[#D97706] tracking-widest block uppercase">Live Feed Stream</span>
-                <div className="flex gap-1.5 mt-1">
-                  {userRole === 'manager' ? (
-                    ['Shegawan', 'Teymshega'].map((br) => (
-                      <button key={br} onClick={() => setCurrentBranch(br)} className={`px-2.5 py-1 text-[10px] font-black rounded-lg uppercase ${currentBranch === br ? 'bg-blue-600 text-white' : 'bg-[#F7F4EB]'}`}>{br}</button>
-                    ))
-                  ) : (
-                    <span className="text-[10px] font-black bg-[#F7F4EB] px-2.5 py-1 border border-blue-100 rounded text-blue-900 uppercase">{currentBranch}</span>
-                  )}
-                </div>
-              </div>
-              <div className="bg-[#F7F4EB] border border-blue-100 p-3 rounded-xl w-full sm:w-auto text-left sm:text-right">
-                <span className="text-[9px] font-black uppercase text-slate-500 block">Gross Revenue Rollout</span>
-                <span className="text-xl font-black text-blue-600">ETB {totalGrossSales.toLocaleString()}</span>
-              </div>
+        {/* --- SCREEN 1: MANAGER METRICS DASHBOARD --- */}
+        {activeTab === 'dashboard' && userRole === 'manager' && (
+          <div className="space-y-6">
+            <div className="border-b pb-4">
+              <h2 className="text-2xl font-black text-blue-900 tracking-tight">REAL-TIME ECOSYSTEM METRICS</h2>
+              <p className="text-xs text-slate-500 font-medium">Fiscal architecture monitoring overview for {currentBranch} base node</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="bg-white border border-blue-100 p-4 rounded-2xl space-y-2">
-                <div className="flex items-center gap-2 border-b border-blue-50 pb-1.5"><Wallet size={13} className="text-blue-600" /><h3 className="text-xs font-black uppercase text-blue-900">Cash Channel</h3></div>
-                <div className="bg-[#F7F4EB]/60 p-2.5 rounded-xl border border-blue-50 flex justify-between items-center"><span className="text-xs text-slate-600 font-medium">Physical Drawer</span><span className="text-xs font-black text-emerald-600">ETB {totalCashSales}</span></div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white border p-5 rounded-2xl shadow-sm flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Gross Revenues</p>
+                  <p className="text-2xl font-black text-blue-900">{totalGrossSales.toLocaleString()} ETB</p>
+                </div>
+                <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600"><TrendingUp size={24} /></div>
               </div>
-              <div className="bg-white border border-blue-100 p-4 rounded-2xl space-y-2">
-                <div className="flex items-center gap-2 border-b border-blue-50 pb-1.5"><Smartphone size={13} className="text-blue-600" /><h3 className="text-xs font-black uppercase text-blue-900">Digital Gateway</h3></div>
-                <div className="bg-[#F7F4EB]/60 p-2.5 rounded-xl border border-blue-50 flex justify-between items-center"><span className="text-xs text-slate-600 font-medium">Telebirr Node</span><span className="text-xs font-black text-blue-600">ETB {totalTelebirrSales}</span></div>
+              <div className="bg-white border p-5 rounded-2xl shadow-sm flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Remitted Cash Drawer</p>
+                  <p className="text-2xl font-black text-slate-800">{totalCashSales.toLocaleString()} ETB</p>
+                </div>
+                <div className="p-3 bg-amber-50 rounded-xl text-amber-600"><Wallet size={24} /></div>
+              </div>
+              <div className="bg-white border p-5 rounded-2xl shadow-sm flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Telebirr Portal Logs</p>
+                  <p className="text-2xl font-black text-blue-600">{totalTelebirrSales.toLocaleString()} ETB</p>
+                </div>
+                <div className="p-3 bg-blue-50 rounded-xl text-blue-600"><Smartphone size={24} /></div>
               </div>
             </div>
           </div>
         )}
 
-        {/* --- 2. MOBILE QUICK ORDER TAKING (POS) MATRIX --- */}
+        {/* --- SCREEN 2: PRODUCTION TICKET DISPATCH TERMINAL (POS) --- */}
         {activeTab === 'pos' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-            <div className="lg:col-span-7 space-y-4">
-              {/* TOUCH ACCESSIBLE CONFIG STATIONS */}
-              <div className="bg-white border border-blue-100 p-3.5 rounded-xl flex items-center justify-between shadow-sm text-xs">
-                <div className="flex items-center gap-3">
-                  <div>
-                    <span className="text-[8px] uppercase text-slate-400 block">Table Map</span>
-                    <input type="number" value={selectedTable} onChange={(e) => setSelectedTable(e.target.value)} className="w-12 bg-[#F7F4EB] text-center text-xs font-black p-1 border border-blue-100 rounded text-blue-900" />
-                  </div>
-                  <div>
-                    <span className="text-[8px] uppercase text-slate-400 block">Customer Tier</span>
-                    <select value={customerType} onChange={(e) => setCustomerType(e.target.value)} className="bg-white text-[10px] font-black uppercase focus:outline-none">
-                      <option value="Regular">Regular</option>
-                      <option value="VIP Tier">VIP Room</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="text-[8px] uppercase text-slate-400 block">Tray Items</span>
-                  <span className="font-black text-blue-600">{cart.length} Row Items</span>
-                </div>
-              </div>
-
-              {/* HORIZONTAL SWIPE MENU FILTER (MOBILE OPTIMIZED) */}
-              <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none snap-x mask-image-horizontal">
-                {['All', 'Food', 'Drinks', 'Hookah'].map((filter) => (
+            {/* DISPLAY CATEGORIES & DISH SELECTION TILES */}
+            <div className="lg:col-span-7 xl:col-span-8 space-y-4">
+              <div className="flex flex-wrap gap-1.5 border-b pb-3 overflow-x-auto max-w-full">
+                {uniqueCategories.map(cat => (
                   <button
-                    key={filter}
-                    onClick={() => setActiveMenuFilter(filter)}
-                    className={`px-4 py-2 text-[10px] font-black uppercase rounded-lg border tracking-wider transition-all whitespace-nowrap snap-start ${activeMenuFilter === filter ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-white text-slate-600 border-blue-100'}`}
+                    key={cat}
+                    onClick={() => setActiveMenuFilter(cat)}
+                    className={`px-3 py-1.5 rounded-xl text-[11px] whitespace-nowrap font-black uppercase tracking-wider transition-all ${activeMenuFilter === cat ? 'bg-blue-900 text-white' : 'bg-white border text-slate-600 hover:bg-slate-50'}`}
                   >
-                    {filter} Catalog
+                    {cat}
                   </button>
                 ))}
               </div>
 
-              {/* CARD MENU SELECTION GRID */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {filteredMenuItems.map((item) => {
-                  const totalTapped = getMenuTotalQtyInCart(item.id);
-                  return (
-                    <div key={item.id} className="bg-white border border-blue-100 p-3.5 rounded-xl flex justify-between items-center shadow-sm">
-                      <div className="min-w-0 flex-1 pr-2">
-                        <p className="text-xs font-black text-blue-900 truncate">{item.name}</p>
-                        <p className="text-[10px] text-[#D97706] font-bold uppercase mt-0.5">ETB {item.price}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {totalTapped > 0 && <span className="text-[10px] bg-blue-50 text-blue-600 font-black px-2 py-1 rounded border border-blue-100">{totalTapped}</span>}
-                        <button type="button" onClick={() => addItemToCart(item)} className="bg-[#F7F4EB] text-blue-900 hover:bg-blue-600 hover:text-white border border-blue-100 font-black text-xs px-3 py-2 rounded-xl transition-all active:scale-95">+ Add</button>
-                      </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+                {filteredMenuItems.map(dish => (
+                  <div key={dish.id} className="bg-white border p-4 rounded-2xl shadow-sm flex flex-col justify-between">
+                    <div className="space-y-1">
+                      <span className="text-[9px] bg-amber-50 px-2 py-0.5 rounded font-black text-amber-800 uppercase">{dish.category}</span>
+                      <h4 className="text-sm font-black text-blue-900">{dish.name}</h4>
+                      {dish.description && <p className="text-[10px] text-slate-400 line-clamp-2 font-medium">{dish.description}</p>}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
 
-            {/* ORDER DRAWER TRAY PANEL */}
-            <div className="lg:col-span-5">
-              <div className="bg-white border border-blue-100 rounded-[1.5rem] p-4 sm:p-5 space-y-4 flex flex-col justify-between min-h-[350px] shadow-sm">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center border-b border-blue-50 pb-2">
-                    <h3 className="text-xs font-black uppercase text-blue-900">Current Tray Ledger</h3>
-                    {cart.length > 0 && <button type="button" onClick={() => setCart([])} className="text-[9px] text-slate-400 font-bold uppercase hover:text-red-500">Flush</button>}
-                  </div>
-
-                  <div className="space-y-2 max-h-[220px] overflow-y-auto pr-0.5">
-                    {cart.length === 0 ? (
-                      <p className="text-xs text-slate-400 text-center py-12 font-medium tracking-wide">PUNCH POS KEYPAD ABOVE TO LOAD TRAY</p>
-                    ) : (
-                      cart.map((item, index) => (
-                        <div key={item.cartItemId} className="bg-[#F7F4EB]/50 p-2.5 rounded-xl border border-blue-50 space-y-2">
-                          <div className="flex justify-between items-center text-xs font-black">
-                            <span className="text-blue-900 truncate max-w-[180px]">#{index + 1} {item.name}</span>
-                            <div className="flex items-center gap-3">
-                              <span className="text-slate-600 font-mono">ETB {item.price}</span>
-                              <button type="button" onClick={() => removeCartItemRow(item.cartItemId)} className="text-slate-300 hover:text-red-500"><X size={12} /></button>
-                            </div>
-                          </div>
-                          <div className="relative flex items-center">
-                            <MessageSquare size={10} className="absolute left-2.5 text-[#D97706]" />
-                            <input type="text" value={item.itemNote} onChange={(e) => handleUpdateItemNote(item.cartItemId, e.target.value)} placeholder="Kitchen memo/instructions..." className="w-full bg-white border border-blue-100 text-[10px] pl-7 pr-2 py-1.5 rounded-lg text-slate-800 focus:outline-none" />
-                          </div>
+                    <div className="mt-4 pt-2 border-t border-dashed border-slate-100 flex flex-col gap-2">
+                      {dish.prices ? (
+                        /* VARIANT HANDLING SELECTORS (SINGLE/DOUBLE/TRIPLE) */
+                        <div className="grid grid-cols-3 gap-1 w-full">
+                          {Object.entries(dish.prices).map(([size, pr]) => pr && (
+                            <button
+                              key={size}
+                              onClick={() => addItemToCart(dish, pr, size.toUpperCase())}
+                              className="bg-slate-50 hover:bg-amber-600 hover:text-white transition-all text-center p-1.5 rounded-lg border flex flex-col justify-center items-center"
+                            >
+                              <span className="text-[8px] font-black uppercase text-slate-400 group-hover:text-white">{size}</span>
+                              <span className="text-[10px] font-black">{pr} ETB</span>
+                            </button>
+                          ))}
                         </div>
-                      ))
-                    )}
+                      ) : (
+                        /* BASE PRICE SINGLE ACTION BUTTON */
+                        <button
+                          onClick={() => addItemToCart(dish)}
+                          className="w-full bg-slate-50 hover:bg-blue-900 hover:text-white transition-all px-3 py-2 rounded-xl border flex justify-between items-center text-xs font-black text-slate-800"
+                        >
+                          <span>{dish.price} ETB</span>
+                          <Plus size={14} className="text-blue-600" />
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-
-                <button type="button" onClick={submitOrder} disabled={cart.length === 0} className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-20 text-white font-black text-xs py-3 rounded-xl uppercase tracking-wider transition-all shadow-md shadow-blue-600/10 active:scale-[0.99]">
-                  Send Order Ticket to Kitchen Display
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* --- 3. MOBILE OPTIMIZED INVOICES & PAYMENTS HUB --- */}
-        {activeTab === 'billing' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            <div className="lg:col-span-5 space-y-2">
-              <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">Active Unpaid Tickets</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
-                {orders.filter(o => o.paymentType === 'Pending' && o.branch === currentBranch).map((order) => (
-                  <button key={order.id} onClick={() => setSelectedPaymentOrder(order)} className={`w-full text-left p-3.5 rounded-xl border flex justify-between items-center bg-white ${selectedPaymentOrder?.id === order.id ? 'border-blue-600 shadow-sm' : 'border-blue-50'}`}>
-                    <div><p className="text-xs font-black text-blue-900">Table Station #{order.table}</p><p className="text-[9px] text-slate-400 mt-0.5">Ticket ID: {order.id}</p></div>
-                    <p className="text-xs font-black text-[#D97706] font-mono">ETB {order.total}</p>
-                  </button>
                 ))}
               </div>
             </div>
 
-            <div className="lg:col-span-7">
-              {selectedPaymentOrder ? (
-                <div className="bg-white border border-blue-100 rounded-[1.5rem] p-4 sm:p-5 space-y-4 shadow-sm">
-                  <div className="border-b border-blue-50 pb-1.5 flex justify-between items-center">
-                    <div>
-                      <h3 className="text-xs font-black uppercase text-blue-900">Tender Configuration</h3>
-                      <p className="text-[9px] text-slate-400 font-bold uppercase">Table {selectedPaymentOrder.table} • ID: {selectedPaymentOrder.id}</p>
-                    </div>
-                    <button type="button" onClick={() => setSelectedPaymentOrder(null)} className="text-slate-400 text-xs font-bold">Close</button>
-                  </div>
+            {/* BASKET SUMMARY TICKET CONTROLLER */}
+            <div className="lg:col-span-5 xl:col-span-4 bg-white border rounded-[2rem] p-5 shadow-xl space-y-4 sticky top-24">
+              <div className="border-b pb-2 flex items-center gap-2">
+                <ShoppingCart size={16} className="text-amber-600" />
+                <h3 className="text-xs font-black uppercase text-blue-900 tracking-wider">Active Run Summary</h3>
+              </div>
 
-                  <div className="flex justify-between text-xs font-black text-blue-900"><span>Grand Invoiced Total:</span><span className="text-blue-600 font-mono">ETB {activeBillCalculations.total.toFixed(2)}</span></div>
-
-                  <div className="bg-[#F7F4EB]/50 p-3.5 rounded-xl border border-blue-100 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className="text-[10px] font-black uppercase text-[#D97706]">Enable Dual-Split (Hybrid)</label>
-                      <input type="checkbox" checked={isHybrid} onChange={(e) => { setIsHybrid(e.target.checked); if (e.target.checked) { setHybridCash((activeBillCalculations.total/2).toFixed(0)); setHybridTelebirr((activeBillCalculations.total/2).toFixed(0)); } }} className="w-4 h-4 accent-blue-600" />
-                    </div>
-
-                    {isHybrid ? (
-                      <div className="grid grid-cols-2 gap-2">
-                        <div><span className="text-[8px] uppercase text-slate-400 font-bold block mb-1">Cash Component</span><input type="number" value={hybridCash} onChange={(e) => { setHybridCash(e.target.value); const rem = activeBillCalculations.total - parseFloat(e.target.value || 0); setHybridTelebirr(rem >= 0 ? rem.toFixed(0) : 0); }} className="w-full bg-white border border-blue-100 p-2 text-xs font-black rounded-lg text-emerald-600" /></div>
-                        <div><span className="text-[8px] uppercase text-slate-400 font-bold block mb-1">Telebirr Component</span><input type="number" value={hybridTelebirr} onChange={(e) => { setHybridTelebirr(e.target.value); const rem = activeBillCalculations.total - parseFloat(e.target.value || 0); setHybridCash(rem >= 0 ? rem.toFixed(0) : 0); }} className="w-full bg-white border border-blue-100 p-2 text-xs font-black rounded-lg text-blue-600" /></div>
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-2 gap-2">
-                        {['Cash', 'Telebirr'].map(m => (
-                          <button key={m} onClick={() => setPaymentMethod(m)} className={`py-2 text-[10px] font-black rounded-lg uppercase border text-center ${paymentMethod === m ? 'border-blue-600 text-blue-600 bg-blue-50/20' : 'border-blue-50 text-slate-400 bg-white'}`}>{m} Solely</button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <button onClick={processPayment} className="w-full bg-blue-600 text-white font-black text-xs py-3 rounded-xl uppercase tracking-wider transition-all shadow-md active:scale-95">Finalize Tender Invoice</button>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[9px] font-black uppercase text-slate-400">Target Table</label>
+                  <select value={selectedTable} onChange={e => setSelectedTable(e.target.value)} className="w-full bg-slate-50 border p-2 rounded-xl text-xs font-bold text-blue-900">
+                    {[1,2,3,4,5,6,7,8,9,10,11,12].map(t => <option key={t} value={t.toString()}>Table {t}</option>)}
+                  </select>
                 </div>
-              ) : (
-                <div className="border border-dashed border-blue-200 rounded-[1.5rem] p-8 text-center text-slate-400 text-xs font-bold bg-white/40">Select an unpaid receipt profile from the side track.</div>
+                <div>
+                  <label className="text-[9px] font-black uppercase text-slate-400">Client Protocol</label>
+                  <select value={customerType} onChange={e => setCustomerType(e.target.value)} className="w-full bg-slate-50 border p-2 rounded-xl text-xs font-bold text-blue-900">
+                    <option value="Regular">Regular Tier</option>
+                    <option value="VIP Tier">VIP Protocol</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="divide-y space-y-2 max-h-64 overflow-y-auto pr-1">
+                {cart.map(item => (
+                  <div key={item.cartItemId} className="pt-2 first:pt-0 space-y-1.5">
+                    <div className="flex justify-between items-start gap-2">
+                      <div className="flex-1">
+                        <h5 className="text-xs font-black text-slate-800">{item.name}</h5>
+                        <p className="text-[10px] text-slate-400 font-bold">{item.price * item.qty} ETB</p>
+                      </div>
+                      <div className="flex items-center gap-1 bg-slate-50 border p-1 rounded-lg">
+                        <button onClick={() => updateCartQty(item.cartItemId, -1)} className="p-1 hover:bg-slate-200 rounded text-slate-600"><Minus size={10} /></button>
+                        <span className="text-xs px-1 font-black text-blue-900">{item.qty}</span>
+                        <button onClick={() => updateCartQty(item.cartItemId, 1)} className="p-1 hover:bg-slate-200 rounded text-slate-600"><Plus size={10} /></button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {cart.length === 0 && (
+                  <div className="py-12 text-center text-slate-400 font-bold text-xs space-y-2">
+                    <Coffee size={32} className="mx-auto text-slate-200" />
+                    <p>Awaiting item inputs to formulate ticket run.</p>
+                  </div>
+                )}
+              </div>
+
+              {cart.length > 0 && (
+                <div className="pt-3 border-t space-y-2">
+                  <div className="flex justify-between font-black text-blue-900 text-sm">
+                    <span>Est. Total (With VAT)</span>
+                    <span>{(cart.reduce((s, i) => s + (i.price * i.qty), 0) * 1.15).toLocaleString()} ETB</span>
+                  </div>
+                  <button onClick={submitOrder} className="w-full bg-blue-900 text-white font-black uppercase text-xs tracking-wider p-3.5 rounded-xl shadow-md">
+                    Dispatch Order to Kitchen Line
+                  </button>
+                </div>
               )}
             </div>
           </div>
         )}
 
-        {/* --- 4. EXPENSES MANAGER --- */}
-        {activeTab === 'expenses' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            <form onSubmit={handleAddExpense} className="lg:col-span-5 bg-white border border-blue-100 p-4 rounded-xl space-y-3 h-fit shadow-sm">
-              <h3 className="text-xs font-black uppercase tracking-wider text-blue-900">File Outflow Ledger</h3>
-              <div className="space-y-1">
-                <span className="text-[9px] font-bold text-slate-500 block uppercase">Expense Description</span>
-                <input type="text" required value={expenseDesc} onChange={(e) => setExpenseDesc(e.target.value)} placeholder="e.g., Market Charcoal, Limes" className="w-full bg-white border border-blue-100 rounded-lg p-2.5 text-xs text-slate-800" />
-              </div>
-              <div className="space-y-1">
-                <span className="text-[9px] font-bold text-slate-500 block uppercase">Amount (ETB)</span>
-                <input type="number" required value={expenseAmount} onChange={(e) => setExpenseAmount(e.target.value)} placeholder="e.g., 400" className="w-full bg-white border border-blue-100 rounded-lg p-2.5 text-xs font-black text-blue-600" />
-              </div>
-              <button type="submit" className="w-full bg-blue-600 text-white font-black text-xs py-2.5 rounded-lg uppercase tracking-wider shadow-sm active:scale-95">File Ledger Entry</button>
-            </form>
-
-            <div className="lg:col-span-7 space-y-2">
-              <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">Live Expenses Flow</h3>
-              <div className="space-y-2">
-                {expenses.filter(e => e.branch === currentBranch).map((exp) => (
-                  <div key={exp.id} className="bg-white border border-blue-50 p-3.5 rounded-xl flex justify-between items-center text-xs shadow-sm">
-                    <div>
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <p className="font-black text-blue-900">{exp.description}</p>
-                        <span className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded ${exp.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>{exp.status}</span>
-                      </div>
-                      <p className="text-[9px] text-slate-400 font-bold mt-0.5">Author Node: {exp.requester}</p>
-                    </div>
-                    <span className="font-black text-red-600 whitespace-nowrap">- ETB {exp.amount}</span>
-                  </div>
-                ))}
-              </div>
+        {/* --- SCREEN 3: KITCHEN PRODUCTION LINES --- */}
+        {activeTab === 'kitchen' && (
+          <div className="space-y-6">
+            <div className="border-b pb-4">
+              <h2 className="text-2xl font-black text-blue-900 tracking-tight">KITCHEN MONITOR OVERVIEW</h2>
+              <p className="text-xs text-slate-500 font-medium">Active preparation timelines queued across cooking infrastructure grids</p>
             </div>
-          </div>
-        )}
 
-        {/* --- 5. KITCHEN DISPLAY MATRIX (KDS) --- */}
-        {activeTab === 'kitchen' && (userRole === 'manager' || userRole === 'chef') && (
-          <div className="space-y-3">
-            <h3 className="text-xs font-black uppercase tracking-wider text-blue-900 border-b border-blue-100 pb-1.5">KDS Live Grid Workflow</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {orders.filter(o => o.status !== 'completed' && o.branch === currentBranch).map(order => (
-                <div key={order.id} className="bg-white border border-blue-100 rounded-xl p-4 flex flex-col justify-between space-y-4 shadow-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {orders.filter(o => o.status === 'pending').map(order => (
+                <div key={order.id} className="bg-white border-2 border-amber-500 rounded-2xl shadow-sm flex flex-col justify-between">
                   <div>
-                    <div className="flex justify-between items-center text-[10px] font-black text-slate-400 border-b border-blue-50 pb-1">
-                      <span>TICKET #{order.id}</span>
-                      <span className="bg-[#F7F4EB] text-blue-900 px-2 py-0.5 rounded font-mono">TABLE {order.table}</span>
+                    <div className="bg-amber-50 px-4 py-3 border-b flex justify-between items-center">
+                      <div>
+                        <span className="text-xs font-black text-amber-900">TABLE {order.table}</span>
+                        <p className="text-[10px] text-slate-400 font-bold">Runner: {order.waiter}</p>
+                      </div>
+                      <span className="text-[10px] bg-amber-600 text-white font-black px-2 py-0.5 rounded-md uppercase animate-pulse">Pending</span>
                     </div>
-                    <div className="pt-2.5 space-y-1.5">
-                      {order.items.map((i, idx) => (
-                        <p key={idx} className="text-xs font-black text-blue-900 leading-tight">🧩 {i.name} {i.itemNote && <span className="text-[10px] text-[#D97706] block font-normal pl-4">Note: {i.itemNote}</span>}</p>
+                    <div className="p-4 space-y-2">
+                      {order.items.map((it, idx) => (
+                        <div key={idx} className="text-xs border-b pb-1 last:border-none">
+                          <p className="font-black text-slate-800"><span className="text-amber-600 mr-1">{it.qty}x</span> {it.name}</p>
+                        </div>
                       ))}
                     </div>
                   </div>
-                  <button type="button" onClick={() => completeOrder(order.id)} className="w-full bg-[#F7F4EB] text-emerald-700 border border-blue-50 text-[10px] font-black py-2 rounded-lg transition-all active:bg-emerald-600 active:text-white">BUMP PRODUCTION COMPLETE</button>
+                  <div className="p-3 bg-slate-50 border-t">
+                    <button
+                      onClick={() => setOrders(orders.map(o => o.id === order.id ? { ...o, status: 'prepared' } : o))}
+                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black uppercase tracking-wider py-2.5 rounded-xl"
+                    >
+                      Mark Preparation Complete
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* --- 6. ADMINISTRATIVE CONFIG VIEWS --- */}
-        {activeTab === 'staffProvisioning' && userRole === 'manager' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            <form onSubmit={handleAddNewStaff} className="lg:col-span-5 bg-white border border-blue-100 p-4 rounded-xl space-y-3 shadow-sm">
-              <h3 className="text-xs font-black uppercase text-blue-900">Provision Worker Access</h3>
-              <div className="space-y-1">
-                <span className="text-[9px] font-bold text-slate-500 block uppercase">Full Name</span>
-                <input type="text" required value={regName} onChange={(e) => setRegName(e.target.value)} placeholder="Worker Name" className="w-full bg-white border border-blue-100 rounded-lg p-2.5 text-xs text-slate-800" />
+        {/* --- SCREEN 4: CASHIER DESK (BILLING WITH CORRECTED WAITER CONTROLS) --- */}
+        {activeTab === 'billing' && (
+          <div className="space-y-6">
+            <div className="border-b pb-4">
+              <h2 className="text-2xl font-black text-blue-900 tracking-tight">SETTLEMENT & PAYMENT BRIDGE</h2>
+              <p className="text-xs text-slate-500 font-medium">Verify credentials, configure line-item discounts, and execute transaction closeouts</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              {/* OUTSTANDING ORDER TICKETS */}
+              <div className="lg:col-span-6 space-y-3">
+                <h3 className="text-xs font-black uppercase text-slate-400 tracking-wider">Unsettled active service runs</h3>
+                {orders.filter(o => o.status === 'pending' || o.status === 'prepared').map(order => (
+                  <button
+                    key={order.id}
+                    onClick={() => { setSelectedPaymentOrder(order); setDiscountPercent(0); setIsHybrid(false); }}
+                    className={`w-full bg-white border text-left p-4 rounded-2xl shadow-sm flex items-center justify-between transition-all ${selectedPaymentOrder?.id === order.id ? 'border-amber-600 ring-2 ring-amber-100' : 'hover:border-slate-300'}`}
+                  >
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-black text-blue-900">#TK-{order.id}</span>
+                        <span className={`text-[9px] font-black uppercase px-2 py-0.2 rounded ${order.status === 'prepared' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                          {order.status}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-500 font-medium">Table {order.table} • Op: {order.waiter}</p>
+                    </div>
+                    <span className="text-sm font-black text-slate-800">{order.total.toLocaleString()} ETB</span>
+                  </button>
+                ))}
               </div>
-              <div className="space-y-1">
-                <span className="text-[9px] font-bold text-slate-500 block uppercase">Pin Code Password</span>
-                <input type="text" maxLength={4} required value={regPin} onChange={(e) => setRegPin(e.target.value)} placeholder="4 Digits" className="w-full bg-white border border-blue-100 rounded-lg p-2.5 text-xs font-mono tracking-widest text-center text-blue-600" />
+
+              {/* DYNAMIC CALCULATION MODAL BLOCK */}
+              <div className="lg:col-span-6">
+                {selectedPaymentOrder ? (
+                  <div className="bg-white border rounded-[2rem] shadow-xl p-5 sm:p-6 space-y-4">
+                    <div className="border-b pb-2 flex justify-between items-center">
+                      <h4 className="text-xs font-black uppercase tracking-wider text-blue-900">Settle Ticket Pipeline #TK-{selectedPaymentOrder.id}</h4>
+                      <button onClick={() => setSelectedPaymentOrder(null)} className="text-slate-400"><X size={16} /></button>
+                    </div>
+
+                    <div>
+                      <label className="text-[10px] font-black uppercase text-slate-400">Discount Frame Modification</label>
+                      <div className="grid grid-cols-4 gap-2 mt-1">
+                        {[0, 5, 10, 20].map(pct => (
+                          <button
+                            key={pct}
+                            onClick={() => setDiscountPercent(pct)}
+                            className={`p-2 border rounded-xl text-xs font-bold transition-all ${discountPercent === pct ? 'bg-blue-900 text-white' : 'bg-slate-50'}`}
+                          >
+                            {pct}% Off
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* REDESIGNED BILLING TYPE CONTROL WITH FULL CORRECTIONS */}
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase text-slate-400">Remittance Strategy Type</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button type="button" onClick={() => { setIsHybrid(false); setPaymentMethod('Cash'); }} className={`p-3 border rounded-xl text-xs font-black uppercase transition-all ${(!isHybrid && paymentMethod === 'Cash') ? 'bg-amber-600 text-white' : 'bg-slate-50'}`}>
+                          Liquid Cash
+                        </button>
+                        <button type="button" onClick={() => { setIsHybrid(false); setPaymentMethod('Telebirr'); }} className={`p-3 border rounded-xl text-xs font-black uppercase transition-all ${(!isHybrid && paymentMethod === 'Telebirr') ? 'bg-blue-600 text-white' : 'bg-slate-50'}`}>
+                          Telebirr Wallet
+                        </button>
+                      </div>
+                      <button type="button" onClick={() => setIsHybrid(!isHybrid)} className={`w-full p-2.5 border border-dashed rounded-xl text-xs font-bold text-center transition-all ${isHybrid ? 'bg-purple-900 text-white border-purple-900' : 'text-purple-900 bg-purple-50'}`}>
+                        {isHybrid ? "✓ Hybrid Remittance Multi-Channel Active" : "⇅ Turn on Hybrid Cash & Telebirr Split Line"}
+                      </button>
+                    </div>
+
+                    {isHybrid && (
+                      <div className="grid grid-cols-2 gap-3 bg-purple-50 p-3 rounded-2xl border border-purple-100 animate-fadeIn">
+                        <div>
+                          <label className="text-[9px] font-black uppercase text-purple-900">Remitted Cash Port</label>
+                          <input type="number" placeholder="ETB Amount" value={hybridCash} onChange={e => setHybridCash(e.target.value)} className="w-full bg-white border p-2 rounded-xl text-xs font-bold" />
+                        </div>
+                        <div>
+                          <label className="text-[9px] font-black uppercase text-purple-900">Telebirr Confirmed Remit</label>
+                          <input type="number" placeholder="ETB Amount" value={hybridTelebirr} onChange={e => setHybridTelebirr(e.target.value)} className="w-full bg-white border p-2 rounded-xl text-xs font-bold" />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="bg-slate-50 border p-4 rounded-2xl space-y-2">
+                      <div className="flex justify-between text-xs font-medium text-slate-500">
+                        <span>Items Subtotal</span>
+                        <span>{activeBillCalculations.subtotal.toLocaleString()} ETB</span>
+                      </div>
+                      <div className="flex justify-between text-xs font-bold text-red-600">
+                        <span>Discount Applied</span>
+                        <span>-{activeBillCalculations.discount.toLocaleString()} ETB</span>
+                      </div>
+                      <div className="flex justify-between text-xs font-medium text-slate-500">
+                        <span>VAT (15%)</span>
+                        <span>{activeBillCalculations.vat.toLocaleString()} ETB</span>
+                      </div>
+                      <div className="flex justify-between text-sm font-black text-blue-900 border-t border-dashed pt-2">
+                        <span>Net Final Due</span>
+                        <span>{activeBillCalculations.total.toLocaleString()} ETB</span>
+                      </div>
+                    </div>
+
+                    <button onClick={processPayment} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase text-xs tracking-wider p-4 rounded-xl shadow-md transition-all">
+                      Confirm Receipt & Clear Ticket Node
+                    </button>
+                  </div>
+                ) : (
+                  <div className="bg-slate-50 border border-dashed rounded-[2rem] p-12 text-center text-slate-400 font-bold text-xs">
+                    Choose an outstanding active ticket registry list item to load calculations.
+                  </div>
+                )}
               </div>
-              <button type="submit" className="w-full bg-blue-600 text-white font-black text-xs py-2.5 rounded-lg uppercase tracking-wider transition-all">Authorize Node Pass</button>
-            </form>
-            <div className="lg:col-span-7 space-y-2">
-              <h3 className="text-xs font-black uppercase text-slate-500">Active Registry</h3>
-              {staffRegistry.map(s => (
-                <div key={s.id} className="bg-white p-3 rounded-lg border border-blue-50 flex justify-between items-center text-xs shadow-sm"><p className="font-black text-blue-900">{s.name} ({s.branch})</p><span className="font-mono text-blue-600 font-bold tracking-widest">{s.pin}</span></div>
-              ))}
             </div>
           </div>
         )}
 
-        {activeTab === 'menuManager' && userRole === 'manager' && (
-          <div className="max-w-md mx-auto bg-white border border-blue-100 p-5 rounded-2xl space-y-4 shadow-sm">
-            <h2 className="text-xs font-black uppercase tracking-wider text-blue-900">Publish Dishes to POS Nodes</h2>
-            <form onSubmit={handleCreateMenuItem} className="space-y-3">
-              <input type="text" required placeholder="Item / Dish Name" value={newDishName} onChange={(e) => setNewDishName(e.target.value)} className="w-full bg-white border border-blue-100 rounded-lg p-2.5 text-xs text-slate-800" />
-              <input type="number" required placeholder="Price (ETB)" value={newDishPrice} onChange={(e) => setNewDishPrice(e.target.value)} className="w-full bg-white border border-blue-100 rounded-lg p-2.5 text-xs text-blue-600 font-black" />
-              <input type="text" required placeholder="Sub-Category Tag (e.g. Traditional)" value={newSubCategory} onChange={(e) => setNewSubCategory(e.target.value)} className="w-full bg-white border border-blue-100 rounded-lg p-2.5 text-xs text-slate-800" />
-              <button type="submit" className="w-full bg-blue-600 text-white font-black text-xs py-2.5 rounded-lg uppercase tracking-wider">Publish to Active Menu</button>
-            </form>
+        {/* --- SCREEN 5: COST & EXPENSE LEDGER RUNNER --- */}
+        {activeTab === 'expenses' && (
+          <div className="space-y-6">
+            <div className="border-b pb-4">
+              <h2 className="text-2xl font-black text-blue-900 tracking-tight">EXPENSE OVERHEAD REGISTRY</h2>
+              <p className="text-xs text-slate-500 font-medium">Log market run cash outlays, resource buyouts, and emergency infrastructure allocations</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                if (!expenseDesc || !expenseAmount) return;
+                setExpenses([{
+                  id: 'e_' + Date.now(), branch: currentBranch, requester: userRole === 'waiter' ? activeWaiterIdentity : 'Manager Core',
+                  description: expenseDesc, category: expenseCategory, amount: parseFloat(expenseAmount), timestamp: 'Just Now', status: userRole === 'manager' ? 'Approved' : 'Pending Approval'
+                }, ...expenses]);
+                setExpenseDesc(''); setExpenseAmount('');
+              }} className="lg:col-span-4 bg-white border p-5 rounded-2xl shadow-sm space-y-3">
+                <h3 className="text-xs font-black uppercase text-blue-900">Add Operating Cost Line</h3>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black uppercase text-slate-400">Expense Classification</label>
+                  <select value={expenseCategory} onChange={e => setExpenseCategory(e.target.value)} className="w-full bg-slate-50 border p-2 rounded-xl text-xs font-bold text-slate-700">
+                    <option value="Ingredients">Ingredients Procurement</option>
+                    <option value="Utilities">Utilities & Generator Fuel</option>
+                    <option value="Maintenance">Infrastructure Operations</option>
+                  </select>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black uppercase text-slate-400">Context Label</label>
+                  <input type="text" required placeholder="e.g. Extra onions sack" value={expenseDesc} onChange={e => setExpenseDesc(e.target.value)} className="w-full bg-white border p-2 rounded-xl text-xs" />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[9px] font-black uppercase text-slate-400">Total Sum (ETB)</label>
+                  <input type="number" required placeholder="ETB Outflow" value={expenseAmount} onChange={e => setExpenseAmount(e.target.value)} className="w-full bg-white border p-2 rounded-xl text-xs font-bold" />
+                </div>
+                <button type="submit" className="w-full bg-amber-600 text-white text-xs font-black uppercase py-2.5 rounded-xl">
+                  Commit Outflow Log
+                </button>
+              </form>
+
+              <div className="lg:col-span-8 bg-white border rounded-2xl shadow-sm overflow-hidden">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-50 font-bold uppercase border-b text-[10px] text-slate-500">
+                    <tr>
+                      <th className="p-3">Cost Context</th>
+                      <th className="p-3">Class</th>
+                      <th className="p-3">Net Sum</th>
+                      <th className="p-3 text-right">Status State</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y text-slate-700">
+                    {expenses.map(exp => (
+                      <tr key={exp.id} className="hover:bg-slate-50/50">
+                        <td className="p-3">
+                          <p className="font-bold text-slate-900">{exp.description}</p>
+                          <p className="text-[9px] text-slate-400 font-bold">By: {exp.requester} • Node: {exp.branch}</p>
+                        </td>
+                        <td className="p-3 text-slate-500">{exp.category}</td>
+                        <td className="p-3 font-black text-slate-900">{exp.amount.toLocaleString()} ETB</td>
+                        <td className="p-3 text-right">
+                          <span className="bg-emerald-100 text-emerald-800 text-[9px] font-black px-2 py-0.5 rounded uppercase">{exp.status}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
-
       </main>
-
-      {/* --- 📱 FIXED PERSISTENT BOTTOM NAVIGATION TAB BAR (MOBILE/TABLET ONLY) --- */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-blue-100 px-2 py-1.5 z-50 flex justify-around items-center shadow-lg">
-        <button onClick={() => setActiveTab('dashboard')} className={`flex flex-col items-center p-2 rounded-lg transition-colors ${activeTab === 'dashboard' ? 'text-blue-600' : 'text-slate-400'}`}>
-          <LayoutDashboard size={18} />
-          <span className="text-[8px] font-black uppercase mt-0.5">Stats</span>
-        </button>
-        <button onClick={() => setActiveTab('pos')} className={`flex flex-col items-center p-2 rounded-lg transition-colors ${activeTab === 'pos' ? 'text-blue-600' : 'text-slate-400'}`}>
-          <ShoppingCart size={18} />
-          <span className="text-[8px] font-black uppercase mt-0.5">Order</span>
-        </button>
-        <button onClick={() => setActiveTab('billing')} className={`flex flex-col items-center p-2 rounded-lg transition-colors ${activeTab === 'billing' ? 'text-blue-600' : 'text-slate-400'}`}>
-          <div className="relative">
-            <CreditCard size={18} />
-            {orders.filter(o => o.paymentType === 'Pending' && o.branch === currentBranch).length > 0 && (
-              <span className="absolute -top-1.5 -right-2 bg-[#D97706] text-white text-[7px] font-black w-3.5 h-3.5 rounded-full flex items-center justify-center">
-                {orders.filter(o => o.paymentType === 'Pending' && o.branch === currentBranch).length}
-              </span>
-            )}
-          </div>
-          <span className="text-[8px] font-black uppercase mt-0.5">Pay</span>
-        </button>
-        <button onClick={() => setActiveTab('expenses')} className={`flex flex-col items-center p-2 rounded-lg transition-colors ${activeTab === 'expenses' ? 'text-blue-600' : 'text-slate-400'}`}>
-          <Wallet size={18} />
-          <span className="text-[8px] font-black uppercase mt-0.5">Spend</span>
-        </button>
-        {userRole === 'manager' && (
-          <button onClick={() => { setMobileMenuOpen(!mobileMenuOpen); setActiveTab('staffProvisioning'); }} className={`flex flex-col items-center p-2 rounded-lg transition-colors ${activeTab === 'staffProvisioning' || activeTab === 'menuManager' ? 'text-blue-600' : 'text-slate-400'}`}>
-            <UserCheck size={18} />
-            <span className="text-[8px] font-black uppercase mt-0.5">Admin</span>
-          </button>
-        )}
-        {(userRole === 'chef') && (
-          <button onClick={() => setActiveTab('kitchen')} className={`flex flex-col items-center p-2 rounded-lg transition-colors ${activeTab === 'kitchen' ? 'text-blue-600' : 'text-slate-400'}`}>
-            <ChefHat size={18} />
-            <span className="text-[8px] font-black uppercase mt-0.5">KDS</span>
-          </button>
-        )}
-      </div>
-
-      {/* ADMIN SUB-MENU FLOATER TOGGLES (MOBILE ONLY) */}
-      {mobileMenuOpen && activeTab === 'staffProvisioning' && userRole === 'manager' && (
-        <div className="lg:hidden fixed bottom-14 left-4 right-4 bg-blue-900 text-white p-2 rounded-xl flex gap-2 justify-center shadow-md border border-blue-800 z-50">
-          <button onClick={() => setActiveTab('staffProvisioning')} className="text-[9px] font-black uppercase bg-blue-800 px-3 py-1.5 rounded">Staff Passwords</button>
-          <button onClick={() => setActiveTab('menuManager')} className="text-[9px] font-black uppercase bg-blue-800 px-3 py-1.5 rounded">Add Menu Items</button>
-        </div>
-      )}
-
     </div>
   );
 }
